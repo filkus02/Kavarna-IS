@@ -10,6 +10,7 @@ Ukládá produkty a jejich ceny. Následně vypisuje přehled těchto produktů.
 Ukládá základní údaje o zaměstnancích. (jméno, pozice, úvazek).
 
 Kontrola vstupů: Cena == int(číslo) Úvazek == (DPP, DPČ nebo fulltime). @@ U toho jsem chtěl dát další podmenu, ale je to pěkná kontrola stringů.
+
 Úložistě je lokální.
 
 
