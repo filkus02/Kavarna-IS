@@ -2,7 +2,11 @@
 
 public class Zamestnanec
 {
-    public String Jmeno;
-    public String Pozice;
-    public String Uvazek;
+    // bezparametrický konstruktor
+    public Zamestnanec() { }
+
+    // veřejné vlastnosti vhodné pro XmlSerializer
+    public string Jmeno { get; set; }
+    public string Pozice { get; set; }
+    public string Uvazek { get; set; }
 }

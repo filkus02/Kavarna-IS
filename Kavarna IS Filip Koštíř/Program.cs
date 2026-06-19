@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-
+//TO DO uložení a načtění z XML
 
 public class Program
 {
@@ -16,6 +16,33 @@ public class Program
 
         Produkty[] poleProduktu = new Produkty[100];
         int pocetProduktu = 0;
+
+        // cesta k XML souboru (bude v adresáři s binárkami. Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohot xml souboru GPT-5 mini.
+        string dataFile = Path.Combine(AppContext.BaseDirectory, "data.xml");
+
+        // Načíst existující data (pokud existují)
+        try
+        {
+            var loaded = XmlStorage.Load(dataFile);
+            // naplnit pole zamestnancu
+            foreach (var z in loaded.Zamestnanci)
+            {
+                if (pocetZamestnancu >= poleZamestnancu.Length) break;
+                poleZamestnancu[pocetZamestnancu++] = z;
+            }
+            // naplnit pole produktu
+            foreach (var p in loaded.Produkty)
+            {
+                if (pocetProduktu >= poleProduktu.Length) break;
+                poleProduktu[pocetProduktu++] = p;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Nepodarilo se nacist data.xml: " + ex.Message);
+            Console.WriteLine("Pokracujte stiskem klavesy...");
+            Console.ReadKey();
+        }
 
         char odpovedHlavni = ' ';
 
@@ -36,11 +63,11 @@ public class Program
             {
                 case '1':
                     // Voláme pod-menu pro zaměstnance (předáváme pomocí ref)
-                    MenuZamestnanci(poleZamestnancu, ref pocetZamestnancu);
+                    MenuZamestnanci(poleZamestnancu, ref pocetZamestnancu, poleProduktu, pocetProduktu);
                     break;
                 case '2':
                     // Voláme pod-menu pro produkty
-                    MenuProdukty(poleProduktu, ref pocetProduktu);
+                    MenuProdukty(poleProduktu, ref pocetProduktu, poleZamestnancu, pocetZamestnancu);
                     break;
             }
 
@@ -54,7 +81,7 @@ public class Program
 
 
 
-    public static void MenuZamestnanci(Zamestnanec[] pole, ref int pocet)
+    public static void MenuZamestnanci(Zamestnanec[] pole, ref int pocet, Produkty[] poleProduktu, int pocetProduktu)
     {
         char odpoved = ' ';
         do
@@ -83,7 +110,10 @@ public class Program
                     Console.Write("Zadejte Pozici (napr. Barista): ");
                     pole[pocet].Pozice = Console.ReadLine();
 
-                    NactiUvazek(out pole[pocet].Uvazek);
+                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou
+                    string uvazek;
+                    NactiUvazek(out uvazek);
+                    pole[pocet].Uvazek = uvazek;
 
                     pocet = pocet + 1;
                     Console.WriteLine("Zamestnanec pridan. Stisknete klavesu...");
@@ -107,7 +137,21 @@ public class Program
 
                 case 'u':
                     Console.Clear();
-                    Console.WriteLine("--- Ukladani zamestnancu ---");
+                    Console.WriteLine("--- Ukladani dat ---");
+                    // Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohot xml souboru GPT-5 mini.
+                    try
+                    {
+                        var data = new KavarnaData();
+                        for (int ix = 0; ix < pocet; ix++) data.Zamestnanci.Add(pole[ix]);
+                        for (int ix = 0; ix < pocetProduktu; ix++) data.Produkty.Add(poleProduktu[ix]);
+                        XmlStorage.Save(Path.Combine(AppContext.BaseDirectory, "data.xml"), data);
+                        Console.WriteLine("Data ulozena do data.xml");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Chyba pri ukladani: " + ex.Message);
+                    }
+                    Console.WriteLine("Stisknete klavesu...");
                     Console.ReadKey();
                     break;
             }
@@ -143,7 +187,7 @@ public class Program
 
     // MENU PRODUKTY (ref)
 
-    public static void MenuProdukty(Produkty[] pole, ref int pocet)
+    public static void MenuProdukty(Produkty[] pole, ref int pocet, Zamestnanec[] poleZamestnancu, int pocetZamestnancu)
     {
         char odpoved = ' ';
         do
@@ -169,7 +213,10 @@ public class Program
                     Console.Write("Zadejte nazev produktu: ");
                     pole[pocet].Nazev = Console.ReadLine();
 
-                    BezpecneNactiCenu(out pole[pocet].Cena);
+                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou
+                    float cena;
+                    BezpecneNactiCenu(out cena);
+                    pole[pocet].Cena = cena;
 
                     pocet = pocet + 1;
                     Console.WriteLine("Produkt pridan. Stisknete klavesu...");
@@ -193,7 +240,21 @@ public class Program
 
                 case 'u':
                     Console.Clear();
-                    Console.WriteLine("--- Ukladani produktu ---");
+                    Console.WriteLine("--- Ukladani dat ---");
+                    try
+                    {
+                        //Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohot xml souboru GPT-5 mini.
+                        var data = new KavarnaData();
+                        for (int ix = 0; ix < pocetZamestnancu; ix++) data.Zamestnanci.Add(poleZamestnancu[ix]);
+                        for (int ix = 0; ix < pocet; ix++) data.Produkty.Add(pole[ix]);
+                        XmlStorage.Save(Path.Combine(AppContext.BaseDirectory, "data.xml"), data);
+                        Console.WriteLine("Data ulozena do data.xml");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Chyba pri ukladani: " + ex.Message);
+                    }
+                    Console.WriteLine("Stisknete klavesu...");
                     Console.ReadKey();
                     break;
             }
