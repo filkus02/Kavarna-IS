@@ -2,7 +2,7 @@ KAVARNA-IS
 Autor: Filip Koštíř
 
 Tento program vznikl jako projekt ke zkoušce z programování na ČZU.
-Tímto projektem jsem se i já chtěl přiučit a zjistit více o githubu a práci s ním.
+Tímto projektem jsem se i já chtěl naučit práci s githubem a práci s ním.
 Vybral jsem si typ úložiště xml. A jako programovací jazyk C#.
 
 Tento program je primitivní IS kavárny.
