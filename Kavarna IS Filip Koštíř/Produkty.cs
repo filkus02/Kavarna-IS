@@ -2,6 +2,10 @@
 
 public class Produkty
 {
-    public String Nazev;
-    public float Cena;
+    // bezparametrický konstruktor
+    public Produkty() { }
+
+    // veřejné vlastnosti vhodné pro XmlSerializer
+    public string Nazev { get; set; }
+    public float Cena { get; set; }
 }
