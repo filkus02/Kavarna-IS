@@ -2,8 +2,6 @@
 using System.IO;
 using System.Xml;
 
-//TO DO uložení a načtění z XML
-
 public class Program
 {
 
@@ -71,7 +69,7 @@ public class Program
                     break;
             }
 
-        } while (odpovedHlavni != 'k');
+        } while (odpovedHlavni != 'k' && odpovedHlavni != 'K' );
     }
    
 
@@ -96,21 +94,41 @@ public class Program
             Console.Write("Zadejte akci: ");
 
             odpoved = Console.ReadKey().KeyChar;
-
+            // Zpracování odpovědi
+            // uživatel je ve smyčce, dokud nezvolí 'k' pro návrat do hlavního menu
+            // Díky tomu se kontroluje, že uživatel zadal pouze platné možnosti
             switch (odpoved)
             {
-                case 'p':
+                case 'p' or 'P':
                     Console.Clear();
                     Console.WriteLine("--- Pridani zamestnance ---");
                     pole[pocet] = new Zamestnanec();
 
-                    Console.Write("Zadejte Jmeno: ");
-                    pole[pocet].Jmeno = Console.ReadLine();
+                    string zadaneJmeno = "";
+                    bool platneJmeno = false;
+
+                    // Cyklus poběží, dokud uživatel nezadá jméno správně
+                    while (!platneJmeno)
+                    {
+                        Console.Write("Zadejte Jmeno (musi zacinat velkym pismenem): ");
+                        zadaneJmeno = Console.ReadLine();
+
+                        // Kontrola: 1. Není prázdné, 2. První znak je velké písmeno
+                        if (!string.IsNullOrEmpty(zadaneJmeno) && char.IsUpper(zadaneJmeno[0]))
+                        {
+                            pole[pocet].Jmeno = zadaneJmeno;
+                            platneJmeno = true; 
+                        }
+                        else
+                        {
+                            Console.WriteLine("Chyba: Jméno musí začínat velkým písmenem a nesmí být prázdné!\n");
+                        }
+                    }
 
                     Console.Write("Zadejte Pozici (napr. Barista): ");
                     pole[pocet].Pozice = Console.ReadLine();
 
-                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou
+                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou Gemini
                     string uvazek;
                     NactiUvazek(out uvazek);
                     pole[pocet].Uvazek = uvazek;
@@ -120,7 +138,7 @@ public class Program
                     Console.ReadKey();
                     break;
 
-                case 'v':
+                case 'v' or 'V':
                     Console.Clear();
                     Console.WriteLine("--- Vypis zamestnancu ---");
 
@@ -135,7 +153,7 @@ public class Program
                     Console.ReadKey();
                     break;
 
-                case 'u':
+                case 'u' or 'U':
                     Console.Clear();
                     Console.WriteLine("--- Ukladani dat ---");
                     // Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohot xml souboru GPT-5 mini.
@@ -154,13 +172,13 @@ public class Program
                     Console.WriteLine("Stisknete klavesu...");
                     Console.ReadKey();
                     break;
-            }
-
-        } while (odpoved != 'k');
+            }       
+                    //-----
+        } while (odpoved != 'k' && odpoved != 'K' );
     }
 
     // Ošetření vstupů
-
+    // Kontrola, že uživatel zadal platnou možnost pro úvazek
 
     public static void NactiUvazek(out String vysledek)
     {
@@ -202,10 +220,12 @@ public class Program
             Console.Write("Zadejte akci: ");
 
             odpoved = Console.ReadKey().KeyChar;
-
+            // Zpracování odpovědi
+            // uživatel je ve smyčce, dokud nezvolí 'k' pro návrat do hlavního menu
+            // Díky tomu se kontroluje, že uživatel zadal pouze platné možnosti
             switch (odpoved)
             {
-                case 'p':
+                case 'p' or 'V':
                     Console.Clear();
                     Console.WriteLine("--- Pridani produktu ---");
                     pole[pocet] = new Produkty();
@@ -213,7 +233,7 @@ public class Program
                     Console.Write("Zadejte nazev produktu: ");
                     pole[pocet].Nazev = Console.ReadLine();
 
-                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou
+                    // Nelze použít out přímo na vlastnost, použijeme lokální proměnnou - gemini
                     float cena;
                     BezpecneNactiCenu(out cena);
                     pole[pocet].Cena = cena;
@@ -223,7 +243,7 @@ public class Program
                     Console.ReadKey();
                     break;
 
-                case 'v':
+                case 'v' or 'V':
                     Console.Clear();
                     Console.WriteLine("--- Vypis produktu ---");
 
@@ -238,7 +258,7 @@ public class Program
                     Console.ReadKey();
                     break;
 
-                case 'u':
+                case 'u' or 'U':
                     Console.Clear();
                     Console.WriteLine("--- Ukladani dat ---");
                     try
@@ -259,8 +279,11 @@ public class Program
                     break;
             }
 
-        } while (odpoved != 'k');
+        } while (odpoved != 'k' && odpoved != 'K');
     }
+    // kontrola vstupu pro cenu produktu
+    // kontroluje zda je vstup platné číslo
+    // Zkouší převést vstup na float, pokud se to nepodaří, požádá uživatele o zadání znovu
     public static void BezpecneNactiCenu(out float vysledek)
     {
         vysledek = 0.0f;

@@ -3,6 +3,10 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
+//Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohoto xml souboru  -GPT-5 mini.
+
+// XmlSerializer převádí objekty do XML a zpět. Abychom mohli ukládat jak produkty, tak zaměstnance do jednoho XML souboru, můžeme vytvořit třídu KavarnaData, která bude obsahovat seznamy obou typů. Tato třída již byla vytvořena výše.
+// XmlArray a XmlArrayItem atributy zajistí, že seznamy budou správně serializovány do XML. Metody Save a Load v třídě XmlStorage umožňují ukládat a načítat data z XML souboru. Tímto způsobem můžeme efektivně ukládat jak produkty, tak zaměstnance do jednoho XML souboru.
 [XmlRoot("KavarnaData")]
 public class KavarnaData
 {
@@ -46,4 +50,3 @@ public static class XmlStorage
         }
     }
 }
-//Za pomoci AI GitHub Copilotem: Teď chci spojit class Produkty a class Zaměstnanec aby se ukládali do tohoto xml souboru GPT-5 mini.
