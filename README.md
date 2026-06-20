@@ -2,7 +2,7 @@ KAVARNA-IS
 Autor: Filip Koštíř
 
 Tento program vznikl jako projekt ke zkoušce z programování na ČZU.
-Tímto projektem jsem se i já chtěl naučit práci s githubem a práci s ním.
+Tímto projektem jsem se chtěl naučit práci s githubem a práci s ním.
 Vybral jsem si typ úložiště xml. A jako programovací jazyk C#.
 Pracoval jsem s projekty které jsem vyráběl na střední a s projektem který jsem vytvářel pro Objektové Modelování. S principem Menu jsem se inspiroval z příkladu z moodlu.
 
