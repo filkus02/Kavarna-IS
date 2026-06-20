@@ -4,7 +4,7 @@ Autor: Filip Koštíř
 Tento program vznikl jako projekt ke zkoušce z programování na ČZU.
 Tímto projektem jsem se chtěl naučit práci s githubem.
 Vybral jsem si typ úložiště xml. A jako programovací jazyk C#.
-Pracoval jsem s projekty které jsem vyráběl na střední a s projektem který jsem vytvářel pro Objektové Modelování. S principem Menu jsem se inspiroval z příkladu z moodlu.
+Pracoval jsem s projekty které jsem vyráběl na střední škole a s projektem který jsem vytvářel pro Objektové Modelování. S principem Menu jsem se inspiroval z příkladu z moodlu.
 
 
 Tento program je primitivní IS kavárny. Obsahuje Hlavní menu a 2 podmenu.
